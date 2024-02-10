@@ -1,4 +1,4 @@
-// functionality: operate the form with input & button
+// functionality: render & operate the form with input & button
 import styles from './ColumnForm.module.scss';
 import { useState } from 'react';
 import Button from '../Button/Button';
