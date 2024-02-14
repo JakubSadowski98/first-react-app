@@ -1,18 +1,13 @@
 // functionality: render new column
 import styles from './Column.module.scss';
 import { useSelector } from 'react-redux';
+import { getFilteredCards } from '../../redux/store';
 import Card from '../Card/Card';
 import CardForm from '../CardForm/CardForm';
 
 const Column = props => {
-  const searchString = useSelector(state => state.searchString);
-
-  const cards = useSelector(state => // zwracanie przefiltrowanych danych z state.cards
-    state.cards.filter(card =>
-      card.columnId === props.id && card.title.toLowerCase().includes(searchString.toLowerCase()) // zwracane są tylke te karty, których właściwość columnId jest zgodna z
-    )                                                                                             // identyfikatorem danej kolumny oraz właściwośc title zawiera odpowiednią frazę
-  );
-
+  const cards = useSelector(state => getFilteredCards(state, props.id));
+  
   return (
     <article className={styles.column}>
         <h2 className={styles.title}>

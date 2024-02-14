@@ -1,13 +1,14 @@
 // functionality: add new column
 import styles from './List.module.scss';
 import { useSelector } from 'react-redux';
+import { getAllColumns } from '../../redux/store';
 import Column from '../Column/Column';
 import ColumnForm from '../ColumnForm/ColumnForm';
 
 const List = () => {
-  const columns = useSelector(state => state.columns); // ! hook useSelector daje dostęp do danych (stanu) magazynu
-                                                       // argumenten jest funkcja callback, która ma dostęp do całego stanu magazynu i decyduje co z tego stanu zwrócić
-  return (                                             // to, co callback zwróci jest też zwracane przez useSelector
+  const columns = useSelector(getAllColumns); // ! hook useSelector daje dostęp do danych (stanu) magazynu
+                                              // argumenten jest funkcja callback, która ma dostęp do całego stanu magazynu i decyduje co z tego stanu zwrócić
+  return (                                    // to, co callback zwróci jest też zwracane przez useSelector
     <div className={styles.list}>
       <header className={styles.header}>
         <h2 className={styles.title}>Things to do<span>soon!</span></h2>

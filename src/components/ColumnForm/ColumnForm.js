@@ -2,6 +2,7 @@
 import styles from './ColumnForm.module.scss';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { addColumn } from '../../redux/store';
 import Button from '../Button/Button';
 import TextInput from '../TextInput/TextInput';
 
@@ -12,8 +13,8 @@ const ColumnForm = () => {
 
   const handleSubmit = e => { // włączenie funkcji callback po wykryciu eventu submit
     e.preventDefault();
-    dispatch({ type: 'ADD_COLUMN', payload: { title, icon } }); // wysłanie polecenia do Reduxa: uruchom akcję ADD_COLUMN, przy czym nowa kolumna (payload)
-                                                                  // powinna być obiektem z właściwościami title i icon (z informacjami o tym, co wpisano w inputy)
+    dispatch(addColumn({title, icon})); // wysłanie polecenia do Reduxa: uruchom akcję ADD_COLUMN (w funkcji reduce), przy czym nowa kolumna
+                                        // powinna przyjąć jako wartość obiekt payload = {title, icon} z informacjami o tym, co wpisano w inputy
     setTitle(''); // czyszczenie zawartości w inputach
     setIcon('');
   };
