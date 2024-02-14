@@ -18,7 +18,7 @@ const List = () => {
           <Column key={column.id} {...column} /> // ! atrybut-parametr key jest unikalną wartością, po której React będzie w stanie łatwiej identyfikować elementy w tablicy
         )}                                       {/* spread operator {...column} przekaże wszystkie właściwości obiektu column jako parametry */}
       </section>
-      <ColumnForm /> 
+      <ColumnForm />
     </div>
   );
 };

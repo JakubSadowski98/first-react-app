@@ -1,16 +1,18 @@
 // functionality: render & operate the form with input & button
 import styles from './CardForm.module.scss';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Button from '../Button/Button';
 import TextInput from '../TextInput/TextInput';
 
 const CardForm = props => {
   const [title, setTitle] = useState('');
+  const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.action({ title: title }, props.columnId); // wywołanie funkcji addCard (znajdującej się w komponencie List) z dwoma parametrami: tytuł karty & id kolumny (przekazane w parametrze props)
-    setTitle('');                                   // referencja do addCart jest przekazana pośrednio przez komponent Column jako parametr action
+    dispatch({ type: 'ADD_CARD', payload: { columnId: props.columnId, title } });
+    setTitle('');
   };
 
   return (

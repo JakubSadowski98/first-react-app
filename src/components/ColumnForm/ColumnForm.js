@@ -1,17 +1,20 @@
 // functionality: render & operate the form with input & button
 import styles from './ColumnForm.module.scss';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Button from '../Button/Button';
 import TextInput from '../TextInput/TextInput';
 
 const ColumnForm = props => {
-  const [title, setTitle] = useState(''); // utworzenie nowego stanu komponentu o startowej wartości pustego stringa (! React pozwala nam na tworzenie dowolnej ilości stanów w komponencie)
+  const [title, setTitle] = useState(''); // dodanie dwóch informacji do stanu komponentu o startowej wartości pustego stringa (! React pozwala na dodawanie dowolnej ilości informacji do stanu komponentu)
   const [icon, setIcon] = useState(''); // stała title/icon jest zsynchronizowana z odpowiednim inputem, zatem zmiana wartości w inpucie oznacza zmianę stanu komponentu
+  const dispatch = useDispatch(); // ! funkcja, która jest pośrednikiem do włączenia funkcji reduce
 
   const handleSubmit = e => { // włączenie funkcji callback po wykryciu eventu submit
     e.preventDefault();
-    props.action({ title: title, icon: icon }); // wywołanie funkcji addColumn z komponentu List otrzymanej w argumencie props.action; przekazanie w parametrze do funkcji addColumn wartości stanów title i icon (informacje o tym, co wpisano w inputy)
-    setTitle(''); // czyszczenie zawartości w input
+    dispatch({ type: 'ADD_COLUMN', payload: { title, icon } }); // wysłanie polecenia do Reduxa: uruchom akcję ADD_COLUMN, przy czym nowa kolumna (payload)
+                                                                  // powinna być obiektem z właściwościami title i icon (z informacjami o tym, co wpisano w inputy)
+    setTitle(''); // czyszczenie zawartości w inputach
     setIcon('');
   };
 
