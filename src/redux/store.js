@@ -10,7 +10,9 @@ const reducer = (state, action) => { // utworzenie nowego (zmodyfikowanego) stan
     case 'ADD_COLUMN':  // jeśli type = 'ADD_COLUMN' to wykona się pierwszy return
       return { ...state, columns: [...state.columns, { id: shortid(), ...action.payload }]}  // zwrócenie jako nowy stan, obiektu, który ma zawartość starego stanu, ale z jedną zmianą…
     case 'ADD_CARD':                                                                         // właściwość columns ma być powiększona o nowy obiekt, który zawiera właściwości: id oraz payload (właściwość obiektu action)
-      return{ ...state, cards: [...state.cards, { id:shortid(), ...action.payload }] };      // zmiana w stanie magazynu powoduje również odświeżenie komponentów, które z niego korzystają
+      return { ...state, cards: [...state.cards, { id:shortid(), ...action.payload }] };      // zmiana w stanie magazynu powoduje również odświeżenie komponentów, które z niego korzystają
+    case 'UPDATE_SEARCHSTRING':
+      return { ...state, searchString: action.payload };
     default:
       return state;
   }

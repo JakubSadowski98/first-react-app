@@ -5,10 +5,12 @@ import Card from '../Card/Card';
 import CardForm from '../CardForm/CardForm';
 
 const Column = props => {
-  const cards = useSelector(state => // zwracanie danych state.cards, które są odpowiednio przefiltrowane
-    state.cards.filter(card =>       // zwracane są tylke te karty, których właściwość columnId jest zgodna z identyfikatorem danej kolumny
-      card.columnId === props.id
-    )
+  const searchString = useSelector(state => state.searchString);
+
+  const cards = useSelector(state => // zwracanie przefiltrowanych danych z state.cards
+    state.cards.filter(card =>
+      card.columnId === props.id && card.title.toLowerCase().includes(searchString.toLowerCase()) // zwracane są tylke te karty, których właściwość columnId jest zgodna z
+    )                                                                                             // identyfikatorem danej kolumny oraz właściwośc title zawiera odpowiednią frazę
   );
 
   return (
