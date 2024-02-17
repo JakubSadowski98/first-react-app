@@ -1,5 +1,5 @@
 import styles from './SearchForm.module.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateSearchString } from '../../redux/store';
 import TextInput from '../TextInput/TextInput';
@@ -14,6 +14,11 @@ const SearchForm = () => {
     dispatch(updateSearchString(searchString));
     setSearchString('');
   };
+
+  useEffect(() => { // state.searchString jest zerowany przy załadowaniu komponentu
+    dispatch(updateSearchString(''));
+  },
+    []);
 
   return (
     <form className={styles.searchForm} onSubmit={handleSubmit}>
