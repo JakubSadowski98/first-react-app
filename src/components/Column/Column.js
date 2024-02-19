@@ -7,7 +7,7 @@ import CardForm from '../CardForm/CardForm';
 
 const Column = props => {
   const cards = useSelector(state => getFilteredCards(state, props.id));
-  
+
   return (
     <article className={styles.column}>
         <h2 className={styles.title}>
@@ -15,7 +15,7 @@ const Column = props => {
           {props.title}
         </h2>
         <ul className={styles.cards}>
-          {cards.map(card => <Card key={card.id} title={card.title} />)} {/* przejście po każdym elemencie z tablicy cards, wraz z renderowaniem tego elementu */}
+          {cards.map(card => <Card key={card.id} id={card.id} title={card.title} />)} {/* przejście po każdym elemencie z tablicy cards, wraz z renderowaniem tego elementu */}
         </ul>
         <CardForm columnId={props.id} />
     </article>

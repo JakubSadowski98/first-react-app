@@ -4,7 +4,7 @@ import { strContains } from '../utils/strContains';
 import initialState from './initialState';
 import shortid from 'shortid';
 
-//selectors - funkcje, które wybierają odpowiednie dane z magazynu
+// SELECTORS - funkcje, które wybierają odpowiednie dane z magazynu
 export const getAllLists = ({ lists }) => lists; // zwrócenie całej tablicy Lists
 
 export const getListById = ({ lists }, listId) => lists.find(list => list.id === listId); // znalezienie (mnetoda find) listy o danym id
@@ -14,17 +14,23 @@ export const getAllColumns = ({ columns }) => columns;
 
 export const getColumnsByList = ({ columns }, listId) => columns.filter((column => column.listId === listId )); // zwrócenie kolumn, które są skojarzone z listą o danym id
 
+export const getCardById = ({ cards }, cardId) => cards.find(card => card.id === cardId); // znalezienie (mnetoda find) karty o danym id
+
 export const getFilteredCards = ({ cards, searchString }, columnId) =>  // destrukturyzacji obiektu state, który został przekazany do funkcji jako parametr - instrukcja { cards, searchString } wyciąga z tego obiektu searchString oraz cards jako stałe;
   cards.filter(card =>                                                  // zwrócenie przefiltrowanych danych z magazynu
     card.columnId === columnId && strContains(card.title, searchString) // zwrócone są tylke te karty, których właściwość columnId jest zgodna z
   );                                                                    // identyfikatorem danej kolumny oraz właściwośc title zawiera odpowiednią frazę
 
-// action creators - funkcje przygotowujące obiekty akcji zawierające właściwości type i payload
+export const getFavoriteCard = ({cards}, isFavorite) => cards.filter(card => card.isFavorite === isFavorite);
+
+// ACTION CREATORS - funkcje przygotowujące obiekty akcji zawierające właściwości type i payload
 export const addList = payload => ({type: 'ADD_LIST', payload});
 
 export const addColumn = payload => ({ type: 'ADD_COLUMN', payload });
 
 export const addCard = payload => ({ type: 'ADD_CARD', payload });
+
+export const toggleCardFavorite = payload => ({type: 'TOGGLE_CARD_FAVORITE', payload});
 
 export const updateSearchString = payload => ({ type: 'UPDATE_SEARCHSTRING', payload });
 
@@ -38,6 +44,8 @@ const reducer = (state, action) => { // utworzenie nowego (zmodyfikowanego) stan
       return { ...state, columns: [...state.columns, { id: shortid(), ...action.payload }]}  // zwrócenie jako nowy stan, obiektu, który ma zawartość starego stanu, ale z jedną zmianą…
     case 'ADD_CARD':                                                                         // właściwość columns ma być powiększona o nowy obiekt, który zawiera właściwości: id oraz payload (właściwość obiektu action)
       return { ...state, cards: [...state.cards, { id:shortid(), ...action.payload }] };     // zmiana w stanie magazynu powoduje również odświeżenie komponentów, które z niego korzystają
+    case 'TOGGLE_CARD_FAVORITE':
+      return { ...state, cards: state.cards.map(card => (card.id === action.payload) ? { ...card, isFavorite: !card.isFavorite } : card) }; // togglowanie wartości wałaściwości isFavorite (false na true oraz true na false)
     case 'UPDATE_SEARCHSTRING':
       return { ...state, searchString: action.payload };
     default:

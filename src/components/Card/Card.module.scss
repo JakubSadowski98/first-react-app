@@ -10,4 +10,21 @@
   display: flex;
   justify-content: space-between;
   font-weight: bold;
+
+  .star {
+    border: none;
+    background-color: $color-light;
+    cursor: pointer;
+
+    &_favorite {
+      color: $color-warning;
+      font-weight: bold;
+    }
+
+  }
+
+  .star:hover {
+    color: $color-warning;
+  }
+
 }
